@@ -1,0 +1,79 @@
+package com.example.mannas.ntl_movieapp.connection;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+/**
+ * Created by Mannas on 4/5/2017.
+ */
+public class BroadcastManager {
+    private static BroadcastManager mBroadcastManager;
+    private static ArrayList<ConnectionListener> listeners;
+
+    // SingleTon
+    private BroadcastManager(){
+    }
+
+    /**
+     *  Dispatch the {@link ConnectionBroadcastReceiver OnRecive() call} ,
+     *  singleton manager ,
+     *  keeps all the listeners in a list and when the Dispatch is called
+     *  it loops through all the listeners
+     *  calling the OnConnectionStateChanged();
+     */
+    public static BroadcastManager getInstance(){
+        if( mBroadcastManager ==null){
+            mBroadcastManager = new BroadcastManager();
+            listeners = new ArrayList<>();
+        }
+        return mBroadcastManager;
+    }
+
+    /**
+     * Dispatch the call to all the listeners at once
+     */
+    public void Dispatch( Context context, Intent intent){
+        //// TODO: 4/6/2017 what if the Activity or the Fragment that added the listener is destroyed ?
+
+        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connManager.getActiveNetworkInfo();
+        int size = listeners.size();
+        for(int i=0 ; i<size ;i++){
+            listeners.get(i).OnConnectionStateChanged(intent,info);
+        }
+    }
+
+    /**
+     * Register a listener waiting for the NetworkState Change
+     * @param listener
+     */
+    public void RegisterListener(ConnectionListener listener){
+        listeners.add(listener);
+    }
+
+    /**
+     *  Remove the Listener
+     * @param listener Listener to Unregister
+     * @return true if it successfully removed, false other wise
+     */
+    public Boolean UnRegisterListener(ConnectionListener listener ){
+
+        for(int i=0;i<listeners.size();i++){
+            if(listeners.get(i).equals(listener)){
+                listeners.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Integer count(){
+        return listeners.size();
+    }
+}
