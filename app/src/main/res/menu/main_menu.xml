@@ -4,13 +4,13 @@
     <item
         android:title="title"
         android:id="@+id/empty"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/settings"
         android:orderInCategory="101"
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/action_show_ir_list"
-                android:icon="@mipmap/ic_launcher"
+                android:id="@+id/orderByAction"
+                android:icon="@drawable/order_by"
                 app:showAsAction="always|withText"
                 android:title="Order By"/>
         </menu>

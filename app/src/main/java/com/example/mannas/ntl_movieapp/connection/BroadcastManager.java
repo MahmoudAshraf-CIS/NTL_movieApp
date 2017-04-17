@@ -38,14 +38,19 @@ public class BroadcastManager {
     /**
      * Dispatch the call to all the listeners at once
      */
-    public void Dispatch( Context context, Intent intent){
-        //// TODO: 4/6/2017 what if the Activity or the Fragment that added the listener is destroyed ?
-
+    public void Dispatch( Context context ){
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Boolean isOffline = true;
+
         NetworkInfo info = connManager.getActiveNetworkInfo();
+        if(info != null){
+            if(info.isAvailable() && info.isConnected())
+                isOffline = false;
+        }
+
         int size = listeners.size();
         for(int i=0 ; i<size ;i++){
-            listeners.get(i).OnConnectionStateChanged(intent,info);
+            listeners.get(i).OnConnectionStateChanged(isOffline);
         }
     }
 

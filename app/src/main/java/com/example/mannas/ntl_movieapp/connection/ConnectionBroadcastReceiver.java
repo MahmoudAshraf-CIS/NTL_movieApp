@@ -26,6 +26,6 @@ public class ConnectionBroadcastReceiver extends android.content.BroadcastReceiv
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        BroadcastManager.getInstance().Dispatch( context , intent);
+        BroadcastManager.getInstance().Dispatch( context );
     }
 }

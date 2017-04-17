@@ -25,10 +25,13 @@ public class DB_Helper  extends SQLiteOpenHelper {
         db.execSQL(  Contract.ls_toprated.CreationSQL_DDL);
         db.execSQL(  Contract.ls_upcoming.CreationSQL_DDL);
 
-        db.execSQL(  Contract.movie_details.CreationSQL_DDL);
-        db.execSQL(  Contract.movie_reviews.CreationSQL_DDL);
-        db.execSQL(  Contract.movie_similar.CreationSQL_DDL);
-        db.execSQL(  Contract.movie_videos.CreationSQL_DDL);
+
+        db.execSQL(  Contract.movie_FullDetail.CreationSQL_DDL);
+        db.execSQL(  Contract.movie_Reviews.CreationSQL_DDL);
+        db.execSQL(  Contract.movie_video.CreationSQL_DDL);
+
+        db.execSQL(  Contract.movie_Fav.CreationSQL_DDL);
+
         Log.i(LOG_TAG,"A new SQL DataBase is deployed !");
     }
 
@@ -41,10 +44,11 @@ public class DB_Helper  extends SQLiteOpenHelper {
             db.execSQL(  Contract.ls_toprated.DropSQL_DDL);
             db.execSQL(  Contract.ls_upcoming.DropSQL_DDL);
 
-            db.execSQL(  Contract.movie_details.DropSQL_DDL);
-            db.execSQL(  Contract.movie_reviews.DropSQL_DDL);
-            db.execSQL(  Contract.movie_similar.DropSQL_DDL);
-            db.execSQL(  Contract.movie_videos.DropSQL_DDL);
+            db.execSQL(  Contract.movie_Reviews.DropSQL_DDL);
+            db.execSQL(  Contract.movie_video.DropSQL_DDL);
+            db.execSQL(  Contract.movie_Fav.DropSQL_DDL);
+            db.execSQL(  Contract.movie_FullDetail.DropSQL_DDL);
+
             Log.i(LOG_TAG,"The Old SQL DataBase is Dropped !");
             onCreate(db);
         }

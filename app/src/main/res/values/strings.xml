@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">NTL_movieApp</string>
+    <string name="orderBy">Order By</string>
+    <string name="overview">Overview</string>
+    <string name="reviews">Reviews</string>
+    <string name="videos">Videos</string>
+    <string name="dismiss">DISMISS</string>
+    <string name="all">ALL</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="article_detail_more_info">More Info</string>
+    <string name="lorem_ipsum">Sugar plum sugar plum gummies donut jelly p</string>
 </resources>

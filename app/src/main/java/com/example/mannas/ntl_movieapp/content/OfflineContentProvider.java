@@ -35,35 +35,37 @@ public class OfflineContentProvider extends android.content.ContentProvider {
     public Cursor query( Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteDatabase DB = mDBHelper.getReadableDatabase();
         Cursor cursor = null;
-        switch (mUriMatcher.match(uri)){
+        switch (Contract.mUriMatcher.match(uri)){
 
             case Contract.TableIdentifier.ls_nowplaying:
-                Log.i(LOG_TAG,"query ls_nowplaying ");
                 cursor = DB.query(Contract.ls_nowplaying.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
-                //cursor.setNotificationUri(getContext().getContentResolver(),uri);
-                cursor.close();
                 break;
             case Contract.TableIdentifier.ls_popular:
+                cursor = DB.query(Contract.ls_popular.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
             case Contract.TableIdentifier.ls_toprated:
+                cursor = DB.query(Contract.ls_toprated.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
             case Contract.TableIdentifier.ls_upcoming:
+                cursor = DB.query(Contract.ls_upcoming.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
 
-            case Contract.TableIdentifier.movie_details:
+            case Contract.TableIdentifier.movie_FullDetail:
+                cursor = DB.query(Contract.movie_FullDetail.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
-            case Contract.TableIdentifier.movie_reviews:
+            case Contract.TableIdentifier.movie_Reviews:
+                cursor = DB.query(Contract.movie_Reviews.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
-            case Contract.TableIdentifier.movie_similar:
+            case Contract.TableIdentifier.movie_video:
+                cursor = DB.query(Contract.movie_video.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
-            case Contract.TableIdentifier.movie_videos:
+            case Contract.TableIdentifier.movie_Fav:
+                cursor = DB.query(Contract.movie_Fav.TABLE_NAME,projection,selection,selectionArgs, null,null,sortOrder);
                 break;
-
         }
-
-
         return cursor;
     }
+
 
     @Nullable
     @Override
@@ -74,11 +76,40 @@ public class OfflineContentProvider extends android.content.ContentProvider {
     @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
+        switch (Contract.mUriMatcher.match(uri)) {
+            case Contract.TableIdentifier.ls_nowplaying:
+                mDBHelper.getWritableDatabase().insert(Contract.ls_nowplaying.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.ls_popular:
+                mDBHelper.getWritableDatabase().insert(Contract.ls_popular.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.ls_toprated :
+                mDBHelper.getWritableDatabase().insert(Contract.ls_toprated.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.ls_upcoming :
+                mDBHelper.getWritableDatabase().insert(Contract.ls_upcoming.TABLE_NAME,null,contentValues);
+                break;
+
+            case Contract.TableIdentifier.movie_FullDetail:
+                mDBHelper.getWritableDatabase().insert(Contract.movie_FullDetail.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.movie_Reviews:
+                mDBHelper.getWritableDatabase().insert(Contract.movie_Reviews.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.movie_video:
+                mDBHelper.getWritableDatabase().insert(Contract.movie_video.TABLE_NAME,null,contentValues);
+                break;
+            case Contract.TableIdentifier.movie_Fav:
+                mDBHelper.getWritableDatabase().insert(Contract.movie_Fav.TABLE_NAME,null,contentValues);
+                break;
+        }
         return null;
     }
 
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
+    public int delete(Uri uri, String whereClauses, String[] whereArgs) {
+        if(Contract.mUriMatcher.match(uri) == Contract.TableIdentifier.movie_Fav)
+            return mDBHelper.getWritableDatabase().delete(Contract.movie_Fav.TABLE_NAME,whereClauses,whereArgs);
         return 0;
     }
 
@@ -88,21 +119,5 @@ public class OfflineContentProvider extends android.content.ContentProvider {
     }
 
 
-
-    private static final UriMatcher mUriMatcher;
-    static {
-        mUriMatcher = new UriMatcher(-1);
-
-        mUriMatcher.addURI(Contract.Authority, Contract.ls_nowplaying.TABLE_NAME, Contract.TableIdentifier.ls_nowplaying);
-        mUriMatcher.addURI(Contract.Authority, Contract.ls_popular.TABLE_NAME, Contract.TableIdentifier.ls_popular);
-        mUriMatcher.addURI(Contract.Authority, Contract.ls_toprated.TABLE_NAME, Contract.TableIdentifier.ls_toprated);
-        mUriMatcher.addURI(Contract.Authority, Contract.ls_upcoming.TABLE_NAME, Contract.TableIdentifier.ls_upcoming);
-
-        mUriMatcher.addURI(Contract.Authority, Contract.movie_details.TABLE_NAME, Contract.TableIdentifier.movie_details);
-        mUriMatcher.addURI(Contract.Authority, Contract.movie_reviews.TABLE_NAME, Contract.TableIdentifier.movie_reviews);
-        mUriMatcher.addURI(Contract.Authority, Contract.movie_similar.TABLE_NAME, Contract.TableIdentifier.movie_similar);
-        mUriMatcher.addURI(Contract.Authority, Contract.movie_videos.TABLE_NAME, Contract.TableIdentifier.movie_videos);
-
-    }
 
 }

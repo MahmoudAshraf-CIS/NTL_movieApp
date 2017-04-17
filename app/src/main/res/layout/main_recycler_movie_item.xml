@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item"
-    >
+    android:minHeight="170dp"
+    android:minWidth="150dp"
+    android:gravity="center"
+    android:id="@+id/item">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/poster"
-        android:background="#000000"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         />
@@ -23,25 +24,19 @@
         android:layout_alignRight="@id/poster"
 
         />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/poster"
-        android:layout_alignLeft="@id/poster">
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/ic_launcher"/>
-        <TextView
-            android:id="@+id/vote_average"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="12.5"
-            android:textSize="15sp"
 
-            android:layout_gravity="center"
-            android:background="#ffffff"/>
-    </LinearLayout>
+    <com.hsalf.smilerating.SmileRating
+        android:id="@+id/vote_average"
+        android:isIndicator="true"
+        android:layout_alignBottom="@id/poster"
+        android:layout_alignLeft="@id/poster"
+        app:showLine="true"
+
+        android:numStars="5"
+        android:rating="2"
+
+        android:layout_width="120dp"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
